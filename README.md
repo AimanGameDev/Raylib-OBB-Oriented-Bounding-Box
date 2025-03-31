@@ -7,7 +7,7 @@
 This is a lightweight, raylib-compatible OBB collision module written in C. It provides high-performance functions for 3D collision detection using oriented bounding boxes, including:
 
 - OBB vs OBB (Separating Axis Theorem)
-- OBB vs BoundingBox (AABB)
+- OBB vs BoundingBox
 - OBB vs Sphere
 - Ray vs OBB
 - Point inside OBB check
