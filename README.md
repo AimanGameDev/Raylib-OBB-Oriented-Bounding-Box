@@ -1,5 +1,6 @@
 # raylib-obb
-![obb-collision](https://github.com/user-attachments/assets/843ae540-d156-4fdb-af10-36292491facf)
+![obb-collision](https://github.com/user-attachments/assets/03360a27-6ebe-4e97-9538-3d8c7e30462c)
+
 
 **Oriented Bounding Box (OBB) Collision System for raylib (C)**
 
