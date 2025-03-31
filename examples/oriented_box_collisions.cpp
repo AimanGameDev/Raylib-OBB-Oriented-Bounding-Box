@@ -86,6 +86,9 @@ int main(void)
             collision = true;
         }
 
+        Ray mouseRay = GetScreenToWorldRay(GetMousePosition(), camera);
+        RayCollision rayCollision = GetRayCollisionOBB(mouseRay, &enemyBoxObb);
+
         if (collision)
             playerColor = RED;
         else
@@ -111,11 +114,18 @@ int main(void)
         // Draw player
         DrawModel(playerModel, Vector3Zero(), 1.0, playerColor);
 
+        if (rayCollision.hit)
+        {
+            DrawPoint3D(rayCollision.point, RED);
+            DrawLine3D(rayCollision.point, rayCollision.point + Vector3Scale(rayCollision.normal, rayCollision.distance), ORANGE);
+        }
+
         DrawGrid(10, 1.0f); // Draw a grid
 
         EndMode3D();
 
         DrawText("Move player with arrow keys to collide", 220, 40, 20, GRAY);
+        DrawText("Place mouse on the grey box to test raycast", 180, 60, 20, GRAY);
 
         DrawFPS(10, 10);
 
