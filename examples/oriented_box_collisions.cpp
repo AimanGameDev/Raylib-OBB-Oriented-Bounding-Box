@@ -105,7 +105,7 @@ int main(void)
 
         // Draw enemy-box
         DrawModel(enemyBoxModel, Vector3Zero(), 1.0, GRAY);
-        DrawModelWires(enemyBoxModel, Vector3Zero(), 1.0, DARKGRAY);
+        OBB_DrawWireframe(&enemyBoxObb, DARKGRAY);
 
         // Draw enemy-sphere
         DrawSphere(enemySpherePos, enemySphereSize, GRAY);
