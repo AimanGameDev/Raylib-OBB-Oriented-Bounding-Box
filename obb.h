@@ -11,7 +11,7 @@ typedef struct OBB
     Vector3 halfExtents;
 };
 
-void OBB_GetAxes(const OBB *obb, Vector3 *right, Vector3 *up, Vector3 *forward)
+inline void OBB_GetAxes(const OBB *obb, Vector3 *right, Vector3 *up, Vector3 *forward)
 {
     Matrix rot = QuaternionToMatrix(obb->rotation);
 
@@ -20,7 +20,7 @@ void OBB_GetAxes(const OBB *obb, Vector3 *right, Vector3 *up, Vector3 *forward)
     *forward = (Vector3){rot.m8, rot.m9, rot.m10};
 }
 
-void OBB_GetCorners(const OBB *obb, Vector3 corners[8])
+inline void OBB_GetCorners(const OBB *obb, Vector3 corners[8])
 {
     Vector3 right, up, forward;
     OBB_GetAxes(obb, &right, &up, &forward);
@@ -40,7 +40,7 @@ void OBB_GetCorners(const OBB *obb, Vector3 corners[8])
     corners[7] = Vector3Add(Vector3Add(Vector3Add(obb->center, right), Vector3Negate(up)), Vector3Negate(forward));
 }
 
-void OBB_DrawWireframe(const OBB *obb, Color color)
+inline void OBB_DrawWireframe(const OBB *obb, Color color)
 {
     Vector3 c[8];
     OBB_GetCorners(obb, c);
@@ -61,7 +61,7 @@ void OBB_DrawWireframe(const OBB *obb, Color color)
     DrawLine3D(c[3], c[7], color);
 }
 
-bool OBB_ContainsPoint(const OBB *obb, Vector3 point)
+inline bool OBB_ContainsPoint(const OBB *obb, Vector3 point)
 {
     Vector3 local = Vector3Subtract(point, obb->center);
 
@@ -73,7 +73,7 @@ bool OBB_ContainsPoint(const OBB *obb, Vector3 point)
            fabsf(local.z) <= obb->halfExtents.z;
 }
 
-void ProjectBoundingBoxOntoAxis(const BoundingBox *box, Vector3 axis, float *outMin, float *outMax)
+inline void ProjectBoundingBoxOntoAxis(const BoundingBox *box, Vector3 axis, float *outMin, float *outMax)
 {
     Vector3 corners[8] = {
         {box->min.x, box->min.y, box->min.z},
@@ -101,7 +101,7 @@ void ProjectBoundingBoxOntoAxis(const BoundingBox *box, Vector3 axis, float *out
     *outMax = max;
 }
 
-void ProjectOBBOntoAxis(const OBB *obb, Vector3 axis, float *outMin, float *outMax)
+inline void ProjectOBBOntoAxis(const OBB *obb, Vector3 axis, float *outMin, float *outMax)
 {
     Vector3 right, up, forward;
     OBB_GetAxes(obb, &right, &up, &forward);
@@ -116,7 +116,7 @@ void ProjectOBBOntoAxis(const OBB *obb, Vector3 axis, float *outMin, float *outM
     *outMax = centerProj + r;
 }
 
-bool CheckCollisionBoundingBoxVsOBB(const BoundingBox *box, const OBB *obb)
+inline bool CheckCollisionBoundingBoxVsOBB(const BoundingBox *box, const OBB *obb)
 {
     Vector3 aabbAxes[3] = {
         {1, 0, 0},
@@ -164,7 +164,7 @@ bool CheckCollisionBoundingBoxVsOBB(const BoundingBox *box, const OBB *obb)
     return true;
 }
 
-bool CheckCollisionOBBvsOBB(const OBB *a, const OBB *b)
+inline bool CheckCollisionOBBvsOBB(const OBB *a, const OBB *b)
 {
     Vector3 axesA[3], axesB[3];
     OBB_GetAxes(a, &axesA[0], &axesA[1], &axesA[2]);
@@ -209,7 +209,7 @@ bool CheckCollisionOBBvsOBB(const OBB *a, const OBB *b)
     return true;
 }
 
-RayCollision GetRayCollisionOBB(Ray ray, const OBB *obb)
+inline RayCollision GetRayCollisionOBB(Ray ray, const OBB *obb)
 {
     RayCollision result = {0};
     result.hit = false;
@@ -284,7 +284,7 @@ RayCollision GetRayCollisionOBB(Ray ray, const OBB *obb)
     return result;
 }
 
-bool CheckCollisionSphereVsOBB(Vector3 sphereCenter, float radius, const OBB *obb)
+inline bool CheckCollisionSphereVsOBB(Vector3 sphereCenter, float radius, const OBB *obb)
 {
     Vector3 localCenter = Vector3Subtract(sphereCenter, obb->center);
     Quaternion invRot = QuaternionInvert(obb->rotation);
